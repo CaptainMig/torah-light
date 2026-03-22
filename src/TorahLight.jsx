@@ -293,6 +293,39 @@ const SHABBAT_INFO = {
   forKids: "One day a week with no homework pressure, no performance. Just being. That's the gift."
 };
 
+const SHABBAT_STEPS = [
+  { step: "Light Candles", time: "18 min before sunset", icon: "🕯️", desc: "The mother (or anyone) lights two candles, covers her eyes, and says the blessing. When she opens them — Shabbat has begun." },
+  { step: "Bless the Children", time: "After candles", icon: "👨‍👧‍👦", desc: "Parents place hands on each child's head. For boys: 'May you be like Ephraim and Menashe.' For girls: 'May you be like Sarah, Rebecca, Rachel, and Leah.'" },
+  { step: "Kiddush", time: "At the table", icon: "🍷", desc: "Bless wine or grape juice. This sanctifies the day — makes it holy, set apart from the week." },
+  { step: "Wash Hands", time: "Before bread", icon: "🫧", desc: "Pour water over each hand twice. Then stay silent until the challah blessing — this quiet moment builds anticipation." },
+  { step: "Break Challah", time: "After washing", icon: "🍞", desc: "Uncover two braided loaves, say the blessing, tear off pieces, dip in salt, share. This is the heart of the meal." },
+  { step: "The Meal", time: "Together!", icon: "🍽️", desc: "Eat, talk, laugh, sing. Traditional foods include chicken soup, roast chicken, kugel, and salads. But it's really about being together." },
+  { step: "Sing!", time: "During & after", icon: "🎵", desc: "Shabbat songs! Shalom Aleichem, Eishet Chayil. You don't need to know every word — the melodies carry you." },
+  { step: "Give Thanks", time: "After eating", icon: "🙏", desc: "Grace after meals — be grateful when you're full, not just when you're hungry." },
+];
+
+const SHABBAT_FOODS = [
+  { name: "Challah", emoji: "🍞", desc: "Braided egg bread — the centerpiece. Two loaves represent the double portion of manna in the desert. Dip in salt!", funFact: "A small piece of dough is separated and burned before baking — a mitzvah from Temple times.", origin: "Ashkenazi" },
+  { name: "Chicken Soup", emoji: "🍲", desc: "'Jewish penicillin.' Golden broth with matzah balls. Every grandmother has her own secret recipe.", funFact: "Maimonides prescribed chicken soup as medicine in the 12th century. Science later proved him right!", origin: "Universal" },
+  { name: "Roast Chicken", emoji: "🍗", desc: "Classic Shabbat main. Often with paprika, garlic, and honey. The house fills with the smell Friday afternoon.", funFact: "Many families have a seasoning recipe that's been passed down for generations — a delicious secret.", origin: "Universal" },
+  { name: "Kugel", emoji: "🥘", desc: "Baked casserole — sweet (noodles, cinnamon, raisins) or savory (potatoes). Warm, comforting, impossible to eat just one piece.", funFact: "'Kugel' comes from German for 'sphere' — early versions were ball-shaped dumplings!", origin: "Ashkenazi" },
+  { name: "Hummus & Israeli Salad", emoji: "🥗", desc: "Creamy chickpea dip with finely diced cucumber-tomato salad. Bright, fresh, and on every Israeli Shabbat table.", funFact: "The smaller the salad dice, the more love went into it — that's the rule.", origin: "Israeli" },
+  { name: "Cholent", emoji: "♨️", desc: "Slow-cooked overnight stew for Shabbat lunch — meat, potatoes, beans, barley. 12+ hours of cooking = incredible flavor.", funFact: "Every community has its version: Ashkenazi cholent, Sephardi hamin, Moroccan dafina, Iraqi t'bit.", origin: "Universal" },
+  { name: "Rugelach", emoji: "🥐", desc: "Crescent pastries filled with chocolate, cinnamon, jam, or nuts. Perfect Shabbat dessert. Rich, flaky, addictive.", funFact: "Rugelach means 'little twists' in Yiddish. From Eastern European bakeries to beloved worldwide.", origin: "Ashkenazi" },
+  { name: "Dabo", emoji: "🫓", desc: "Ethiopian Jewish Shabbat bread — soft, honey-sweetened, spiced with turmeric and nigella. A different challah tradition.", funFact: "Ethiopian Jews made dabo even while walking from Ethiopia to Sudan as refugees. Shabbat doesn't stop.", origin: "Ethiopian" },
+];
+
+const SHABBAT_DISCUSSIONS = [
+  { q: "What was the best thing that happened this week?", theme: "Gratitude", icon: "✨" },
+  { q: "If you could visit any moment in Jewish history, when?", theme: "Heritage", icon: "⏰" },
+  { q: "What's one kind thing someone did for you, and one you did for someone?", theme: "Chesed", icon: "💛" },
+  { q: "If you could ask God one question, what would it be?", theme: "Faith", icon: "🤔" },
+  { q: "What do you want to do differently next week?", theme: "Growth", icon: "🌱" },
+  { q: "Who do you admire and why?", theme: "Kavod", icon: "⭐" },
+  { q: "What does 'rest' really mean to you?", theme: "Shabbat", icon: "😌" },
+  { q: "What surprised you this week?", theme: "Learning", icon: "💡" },
+];
+
 // ═══════════════════════════════════════
 // GLOBE
 // ═══════════════════════════════════════
@@ -440,6 +473,7 @@ const SECTIONS = [
 
 export default function TorahLight() {
   const [sec, setSec] = useState("home");
+  const [happyMode, setHappyMode] = useState(false);
   const [selP, setSelP] = useState(null);
   const [selL, setSelL] = useState(null);
   const [selH, setSelH] = useState(null);
@@ -908,19 +942,113 @@ export default function TorahLight() {
     </div>
   ); };
 
-  const renderShabbat = () => (
+  const renderShabbat = () => {
+    const weekNum = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / 604800000);
+    const weekDiscussion = SHABBAT_DISCUSSIONS[weekNum % SHABBAT_DISCUSSIONS.length];
+    const weekFood = SHABBAT_FOODS[weekNum % SHABBAT_FOODS.length];
+    return (
     <div style={{ padding: 20 }}>
-      <h2 style={{ color: C.goldLight, fontSize: 22, marginBottom: 4 }}>🕯️ Shabbat</h2>
-      <p style={{ color: C.muted, fontSize: 13, marginBottom: 20 }}>Weekly reset for your soul.</p>
-      {[{ l: "What is it?", t: SHABBAT_INFO.what }, { l: "Why?", t: SHABBAT_INFO.why }, { l: "How?", t: SHABBAT_INFO.how }].map(i =>
-        <div key={i.l} style={{ ...gc, marginBottom: 16 }}><p style={{ color: C.gold, margin: "0 0 8px", fontWeight: 700 }}>{i.l}</p><p style={{ color: C.parchmentDark, margin: 0, lineHeight: 1.7 }}>{i.t}</p></div>
-      )}
-      <div style={{ padding: "16px 20px", background: "rgba(212,168,83,0.06)", borderRadius: 12, borderLeft: `3px solid ${C.gold}` }}>
-        <p style={{ fontSize: 11, color: C.gold, margin: "0 0 4px", fontWeight: 700, letterSpacing: 1 }}>REAL TALK</p>
-        <p style={{ fontSize: 14, color: C.parchment, margin: 0, lineHeight: 1.7, fontStyle: "italic" }}>{SHABBAT_INFO.forKids}</p>
+      <h2 style={{ color: C.goldLight, fontSize: 22, marginBottom: 4 }}>🕯️ Shabbat Shalom!</h2>
+      <p style={{ color: C.muted, fontSize: 13, marginBottom: 20 }}>The weekly celebration — food, family, songs, and soul.</p>
+
+      {/* What is Shabbat */}
+      <div style={{ ...gc, marginBottom: 16 }}>
+        <p style={{ color: C.gold, margin: "0 0 8px", fontWeight: 700, fontSize: 15 }}>What is Shabbat?</p>
+        <p style={{ color: C.parchmentDark, margin: "0 0 8px", lineHeight: 1.7, fontSize: 13 }}>{SHABBAT_INFO.what} {SHABBAT_INFO.why}</p>
+        <div style={{ padding: "10px 14px", background: "rgba(212,168,83,0.06)", borderRadius: 8, borderLeft: `3px solid ${C.gold}` }}>
+          <p style={{ color: C.goldLight, margin: 0, fontSize: 14, fontStyle: "italic", lineHeight: 1.7 }}>{SHABBAT_INFO.forKids}</p>
+        </div>
+      </div>
+
+      {/* This Week's Discussion */}
+      <div style={{ ...gc, marginBottom: 16, borderLeft: `3px solid ${C.purple}` }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ color: C.purple, fontSize: 11, fontWeight: 700, letterSpacing: 1 }}>THIS WEEK'S TABLE QUESTION</span>
+          <span style={{ fontSize: 18 }}>{weekDiscussion.icon}</span>
+        </div>
+        <p style={{ color: C.goldLight, fontSize: 17, margin: "0 0 6px", lineHeight: 1.5 }}>{weekDiscussion.q}</p>
+        <span style={{ fontSize: 11, color: C.muted, background: "rgba(167,139,250,0.1)", padding: "3px 10px", borderRadius: 10 }}>{weekDiscussion.theme}</span>
+      </div>
+
+      {/* Step by Step */}
+      <p style={{ color: C.gold, fontSize: 15, fontWeight: 700, marginBottom: 12 }}>Friday Night — Step by Step</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+        {SHABBAT_STEPS.map((s, i) => (
+          <div key={i} style={{ ...gc, display: "flex", gap: 12, alignItems: "flex-start", padding: 16 }}>
+            <div style={{ minWidth: 40, height: 40, borderRadius: "50%", background: "rgba(212,168,83,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{s.icon}</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <p style={{ color: C.goldLight, fontSize: 14, margin: 0, fontWeight: 700 }}>{s.step}</p>
+                <span style={{ color: C.muted, fontSize: 10 }}>{s.time}</span>
+              </div>
+              <p style={{ color: C.parchmentDark, fontSize: 12, margin: "4px 0 0", lineHeight: 1.6 }}>{s.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Food Spotlight */}
+      <p style={{ color: C.gold, fontSize: 15, fontWeight: 700, marginBottom: 4 }}>🍽️ Shabbat Foods</p>
+      <p style={{ color: C.muted, fontSize: 12, marginBottom: 12 }}>Jewish families around the world celebrate with these dishes.</p>
+
+      {/* Featured food of the week */}
+      <div style={{ ...gc, marginBottom: 16, borderLeft: `3px solid ${C.sage}` }}>
+        <span style={{ color: C.sage, fontSize: 10, fontWeight: 700, letterSpacing: 1 }}>FEATURED THIS WEEK</span>
+        <p style={{ color: C.goldLight, fontSize: 18, margin: "6px 0 4px" }}>{weekFood.emoji} {weekFood.name}</p>
+        <p style={{ color: C.parchmentDark, fontSize: 13, margin: "0 0 8px", lineHeight: 1.6 }}>{weekFood.desc}</p>
+        <div style={{ padding: "8px 12px", background: "rgba(34,197,94,0.06)", borderRadius: 8 }}>
+          <p style={{ color: C.sage, fontSize: 11, margin: "0 0 2px", fontWeight: 700 }}>FUN FACT</p>
+          <p style={{ color: C.parchment, fontSize: 12, margin: 0, lineHeight: 1.6 }}>{weekFood.funFact}</p>
+        </div>
+        <span style={{ display: "inline-block", marginTop: 8, fontSize: 10, color: C.muted, background: "rgba(212,168,83,0.06)", padding: "2px 8px", borderRadius: 8 }}>{weekFood.origin}</span>
+      </div>
+
+      {/* All foods grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))", gap: 8, marginBottom: 24 }}>
+        {SHABBAT_FOODS.map((f, i) => (
+          <div key={i} style={{ ...gc, padding: 14, textAlign: "center" }}>
+            <span style={{ fontSize: 28 }}>{f.emoji}</span>
+            <p style={{ color: C.goldLight, fontSize: 13, margin: "4px 0 2px", fontWeight: 700 }}>{f.name}</p>
+            <p style={{ color: C.muted, fontSize: 10, margin: 0 }}>{f.origin}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Songs */}
+      <p style={{ color: C.gold, fontSize: 15, fontWeight: 700, marginBottom: 12 }}>🎵 Shabbat Songs</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+        {[
+          { name: "Shalom Aleichem", hebrew: "שלום עליכם", desc: "Welcome the angels of peace into your home.", when: "Before Kiddush" },
+          { name: "Eishet Chayil", hebrew: "אשת חיל", desc: "'A Woman of Valor' — praising strength and wisdom.", when: "Before Kiddush" },
+          { name: "Shabbat Shalom", hebrew: "שבת שלום", desc: "The universal Shabbat greeting — say it to everyone!", when: "Anytime!" },
+        ].map((s, i) => (
+          <div key={i} style={{ ...gc, padding: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <p style={{ color: C.goldLight, fontSize: 14, margin: "0 0 2px", fontWeight: 700 }}>{s.name} <span style={{ color: C.gold, fontWeight: 400 }}>{s.hebrew}</span></p>
+              <p style={{ color: C.parchmentDark, fontSize: 12, margin: 0 }}>{s.desc}</p>
+            </div>
+            <span style={{ color: C.muted, fontSize: 10, whiteSpace: "nowrap" }}>{s.when}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* All Discussions */}
+      <p style={{ color: C.gold, fontSize: 15, fontWeight: 700, marginBottom: 12 }}>💬 Table Questions</p>
+      <p style={{ color: C.muted, fontSize: 12, marginBottom: 12 }}>Pick one for dinner tonight — or use them all over the month.</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        {SHABBAT_DISCUSSIONS.map((d, i) => (
+          <div key={i} style={{ ...gc, padding: 14, display: "flex", gap: 10, alignItems: "center" }}>
+            <span style={{ fontSize: 20 }}>{d.icon}</span>
+            <div>
+              <p style={{ color: C.parchment, fontSize: 13, margin: 0, lineHeight: 1.5 }}>{d.q}</p>
+              <span style={{ fontSize: 10, color: C.muted }}>{d.theme}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-  );
+    );
+  };
 
   // ─── QUIZ HELPERS ───
   const loadNewQuiz = () => {
@@ -1080,18 +1208,26 @@ export default function TorahLight() {
 
   const R = { home: renderHome, challenge: renderChallenge, alephbet: renderAlephBet, torah: renderTorah, prayer: renderPrayer, globe: renderGlobe, heritage: renderHeritage, holidays: renderHolidays, values: renderValues, heart: renderHeart, lesson: renderLesson, shabbat: renderShabbat };
 
+  const hm = happyMode;
+  const bgGrad = hm
+    ? "linear-gradient(180deg, #1a1207 0%, #2d1f0e 40%, #1f2937 100%)"
+    : `linear-gradient(180deg,${C.night} 0%,${C.deep} 40%,${C.ocean} 100%)`;
+
   return (
-    <div style={{ minHeight: "100vh", background: `linear-gradient(180deg,${C.night} 0%,${C.deep} 40%,${C.ocean} 100%)`, fontFamily: "Georgia,'Times New Roman',serif", color: C.parchment, display: "flex", flexDirection: "column" }}>
-      <nav style={{ display: "flex", gap: 2, padding: "8px 6px 0", overflowX: "auto", borderBottom: `1px solid ${C.gb}`, background: "rgba(10,14,26,0.85)", backdropFilter: "blur(12px)", position: "sticky", top: 0, zIndex: 100, WebkitOverflowScrolling: "touch" }}>
+    <div style={{ minHeight: "100vh", background: bgGrad, fontFamily: "Georgia,'Times New Roman',serif", color: C.parchment, display: "flex", flexDirection: "column", fontSize: hm ? 16 : 14 }}>
+      <nav style={{ display: "flex", gap: 2, padding: "8px 6px 0", overflowX: "auto", borderBottom: `1px solid ${C.gb}`, background: hm ? "rgba(45,31,14,0.9)" : "rgba(10,14,26,0.85)", backdropFilter: "blur(12px)", position: "sticky", top: 0, zIndex: 100, WebkitOverflowScrolling: "touch", alignItems: "center" }}>
         {SECTIONS.map(s => (
-          <button key={s.id} onClick={() => handleNav(s.id)} style={{ background: sec === s.id ? "rgba(212,168,83,0.12)" : "transparent", border: "none", borderBottom: sec === s.id ? `2px solid ${C.gold}` : "2px solid transparent", color: sec === s.id ? C.goldLight : C.muted, padding: "8px 10px", cursor: "pointer", fontFamily: "Georgia,serif", fontSize: 10, whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 44, transition: "all .2s" }}>
+          <button key={s.id} onClick={() => handleNav(s.id)} style={{ background: sec === s.id ? (hm ? "rgba(240,212,138,0.15)" : "rgba(212,168,83,0.12)") : "transparent", border: "none", borderBottom: sec === s.id ? `2px solid ${hm ? C.goldLight : C.gold}` : "2px solid transparent", color: sec === s.id ? C.goldLight : C.muted, padding: "8px 10px", cursor: "pointer", fontFamily: "Georgia,serif", fontSize: 10, whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 44, transition: "all .2s" }}>
             <span style={{ fontSize: 15 }}>{s.icon}</span><span>{s.label}</span>
           </button>
         ))}
+        <button onClick={() => setHappyMode(!hm)} style={{ marginLeft: "auto", background: "none", border: `1px solid ${hm ? C.goldLight : C.gb}`, borderRadius: 20, padding: "4px 10px", cursor: "pointer", fontSize: 14, color: hm ? C.goldLight : C.muted, whiteSpace: "nowrap", flexShrink: 0, transition: "all .3s" }} title={hm ? "Scholar Mode" : "Friendly Mode"}>
+          {hm ? "📚" : "☀️"}
+        </button>
       </nav>
       <main style={{ flex: 1, maxWidth: 700, margin: "0 auto", width: "100%" }}>{(R[sec] || renderHome)()}</main>
       <footer style={{ textAlign: "center", padding: "24px 20px", borderTop: `1px solid ${C.gb}`, fontFamily: "Georgia,serif", fontSize: 11 }}>
-        <p style={{ margin: "0 0 4px", color: C.parchmentDark, fontSize: 13 }}>Torah Light</p>
+        <p style={{ margin: "0 0 4px", color: C.parchmentDark, fontSize: 13 }}>Torah Light {hm ? "☀️" : STAR}</p>
         <p style={{ margin: "0 0 8px", color: C.goldDim }}>Built with love for <strong style={{ color: C.goldLight }}>Ariah (אריה)</strong> & <strong style={{ color: C.goldLight }}>Isabelle Eliora (אליאורה)</strong></p>
         <p style={{ margin: 0, letterSpacing: 2, fontSize: 12, color: C.goldDim }}>AMDG {STAR} Am Yisrael Chai</p>
       </footer>
