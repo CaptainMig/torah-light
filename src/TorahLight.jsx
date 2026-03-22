@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import GlobeGL from "react-globe.gl";
+
 
 const STAR = "✡";
 const C = {
@@ -331,7 +331,7 @@ const SHABBAT_DISCUSSIONS = [
 // GLOBE
 // ═══════════════════════════════════════
 // ═══════════════════════════════════════
-// GLOBE PINS (for react-globe.gl)
+// GLOBE PINS
 // ═══════════════════════════════════════
 const GLOBE_PINS = [
   { lat: 31.78, lng: 35.22, name: "Jerusalem", color: "#f0d48a", linkTo: "torah", story: "The beating heart of Jewish life — Western Wall, Temple Mount, and 3,000+ years of memory." },
@@ -461,7 +461,6 @@ export default function TorahLight() {
   const [quizHistory, setQuizHistory] = useState([]);
   const [sectionsVisited, setSectionsVisited] = useState(new Set(["home"]));
   const [selectedPin, setSelectedPin] = useState(null);
-  const globeEl = useRef();
 
   const speak = (text) => {
     if (!window?.speechSynthesis) return;
@@ -768,77 +767,63 @@ export default function TorahLight() {
   // ─── GLOBE ───
   const renderGlobe = () => (
     <div style={{ padding: 20 }}>
-      <h2 style={{ color: C.goldLight, fontSize: 22, marginBottom: 4 }}>Jewish History Globe</h2>
+      <h2 style={{ color: C.goldLight, fontSize: 22, marginBottom: 4 }}>🌍 Jewish History Globe</h2>
       <p style={{ color: C.muted, fontSize: 13, marginBottom: 16 }}>
-        Spin the globe and tap places to explore Torah, history, heritage, and Israel.
+        Tap any place to discover its story and connection to your family, Torah, and Jewish history.
       </p>
-      <div style={{ ...gc, padding: 12, position: "relative", overflow: "hidden", minHeight: 520 }}>
-        <div style={{ height: 500 }}>
-          <GlobeGL
-            ref={globeEl}
-            globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-            backgroundColor="rgba(0,0,0,0)"
-            pointsData={GLOBE_PINS}
-            pointLat="lat"
-            pointLng="lng"
-            pointColor="color"
-            pointAltitude={0.02}
-            pointRadius={0.5}
-            labelsData={GLOBE_PINS}
-            labelLat="lat"
-            labelLng="lng"
-            labelText="name"
-            labelSize={1.5}
-            labelDotRadius={0.3}
-            labelColor={() => "#f0d48a"}
-            arcsData={[
-              { startLat: 55.76, startLng: 37.62, endLat: 31.78, endLng: 35.22, color: ["#ef4444", "#22c55e"] },
-              { startLat: 46.48, startLng: 30.73, endLat: 32.08, endLng: 34.78, color: ["#ef4444", "#22c55e"] },
-            ]}
-            arcDashLength={0.4}
-            arcDashGap={0.8}
-            arcDashAnimateTime={3500}
-            onPointClick={(p) => {
-              if (globeEl.current) {
-                globeEl.current.pointOfView({ lat: p.lat, lng: p.lng, altitude: 1.8 }, 1200);
-              }
-              setSelectedPin(p);
-            }}
-          />
-        </div>
-        {selectedPin && (
-          <div style={{
-            position: "absolute", left: 20, bottom: 20, maxWidth: 340,
-            background: "rgba(10,14,26,0.94)", border: `1px solid ${C.gb}`,
-            borderRadius: 16, padding: 18, boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
-          }}>
-            <p style={{ color: C.goldLight, fontSize: 20, margin: "0 0 8px", fontWeight: 700 }}>{selectedPin.name}</p>
-            <p style={{ color: C.parchmentDark, fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>{selectedPin.story}</p>
-            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-              <button onClick={() => handleNav(selectedPin.linkTo)} style={{
-                background: `linear-gradient(135deg,${C.gold},${C.goldDim})`, color: C.night,
-                border: "none", borderRadius: 10, padding: "10px 14px",
-                fontFamily: "Georgia,serif", fontWeight: 700, cursor: "pointer",
-              }}>Explore this story →</button>
-              <button onClick={() => setSelectedPin(null)} style={{
-                background: "transparent", color: C.parchment,
-                border: `1px solid ${C.gb}`, borderRadius: 10, padding: "10px 14px",
-                fontFamily: "Georgia,serif", cursor: "pointer",
-              }}>Close</button>
-            </div>
-          </div>
-        )}
-      </div>
-      {/* Location pills below globe */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 16 }}>
+
+      {/* Location Grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 10, marginBottom: 20 }}>
         {GLOBE_PINS.map((p, i) => (
-          <button key={i} onClick={() => {
-            if (globeEl.current) globeEl.current.pointOfView({ lat: p.lat, lng: p.lng, altitude: 1.8 }, 1200);
-            setSelectedPin(p);
-          }} style={pl(selectedPin?.name === p.name, p.color)}>
-            {p.name}
+          <button key={i} onClick={() => setSelectedPin(selectedPin?.name === p.name ? null : p)} style={{
+            background: selectedPin?.name === p.name ? "rgba(212,168,83,0.12)" : C.glass,
+            border: `2px solid ${selectedPin?.name === p.name ? p.color : C.gb}`,
+            borderRadius: 14, padding: "14px 12px", cursor: "pointer",
+            textAlign: "left", transition: "all .25s", position: "relative", overflow: "hidden",
+          }}>
+            <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: p.color, opacity: 0.5, borderRadius: "0 14px 14px 0" }} />
+            <p style={{ color: p.color, fontSize: 16, margin: "0 0 4px", fontWeight: 700, fontFamily: "Georgia,serif" }}>{p.name}</p>
+            <p style={{ color: C.muted, fontSize: 11, margin: 0 }}>
+              {p.linkTo === "torah" ? "📖 Torah" : p.linkTo === "heritage" ? "🇷🇺 Heritage" : p.linkTo === "holidays" ? "🕎 Holidays" : "💎 Values"}
+            </p>
           </button>
         ))}
+      </div>
+
+      {/* Selected Pin Detail */}
+      {selectedPin && (
+        <div style={{ ...gc, borderLeft: `4px solid ${selectedPin.color}`, marginBottom: 16 }}>
+          <p style={{ color: selectedPin.color, fontSize: 22, margin: "0 0 8px", fontWeight: 700 }}>{selectedPin.name}</p>
+          <p style={{ color: C.parchmentDark, fontSize: 14, lineHeight: 1.7, margin: "0 0 16px" }}>{selectedPin.story}</p>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <button onClick={() => handleNav(selectedPin.linkTo)} style={{
+              background: `linear-gradient(135deg,${C.gold},${C.goldDim})`, color: C.night,
+              border: "none", borderRadius: 10, padding: "10px 18px",
+              fontFamily: "Georgia,serif", fontWeight: 700, cursor: "pointer", fontSize: 13,
+            }}>Explore this story →</button>
+            <button onClick={() => setSelectedPin(null)} style={{
+              background: "transparent", color: C.parchment,
+              border: `1px solid ${C.gb}`, borderRadius: 10, padding: "10px 14px",
+              fontFamily: "Georgia,serif", cursor: "pointer", fontSize: 13,
+            }}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {/* Migration Arcs Visual */}
+      <div style={{ ...gc, textAlign: "center" }}>
+        <p style={{ color: C.gold, fontSize: 14, margin: "0 0 12px", fontWeight: 700 }}>Migration Routes</p>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <span style={{ color: C.ember, fontSize: 13 }}>🇷🇺 Moscow</span>
+          <span style={{ color: C.goldDim }}>→ → →</span>
+          <span style={{ color: C.sage, fontSize: 13 }}>🇮🇱 Jerusalem</span>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 6 }}>
+          <span style={{ color: C.ember, fontSize: 13 }}>📖 Odessa</span>
+          <span style={{ color: C.goldDim }}>→ → →</span>
+          <span style={{ color: C.sage, fontSize: 13 }}>🏙️ Tel Aviv</span>
+        </div>
+        <p style={{ color: C.muted, fontSize: 11, margin: "10px 0 0" }}>Over 1 million Russian Jews made these journeys in the 1990s — your family's story.</p>
       </div>
     </div>
   );
