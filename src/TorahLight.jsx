@@ -389,8 +389,43 @@ const ALEPH_BET = [
   { letter: "ת", name: "Tav", sound: "T", value: 400, meaning: "Mark / Sign", fun: "The last letter. Tav means 'sign' or 'truth.' Emet (truth) is spelled with the first, middle, and last letters of the alphabet — truth spans everything.", word: "תּוֹרָה (Torah) — Teaching" },
 ];
 
+// ═══════════════════════════════════════
+// DAILY CHALLENGES & QUIZZES
+// ═══════════════════════════════════════
+const QUIZ_POOL = [
+  { q: "What is the first letter of the Hebrew alphabet?", opts: ["Bet", "Aleph", "Gimel", "Dalet"], ans: 1, cat: "Aleph-Bet", explain: "Aleph is first — and it's silent! Leadership begins with listening." },
+  { q: "What does 'Shema Yisrael' mean?", opts: ["Thank you God", "Hear O Israel", "Peace be with you", "God is great"], ans: 1, cat: "Prayer", explain: "The most important prayer in Judaism — a declaration that God is One." },
+  { q: "How many commandments are in the Torah?", opts: ["10", "248", "613", "1000"], ans: 2, cat: "Torah", explain: "613 mitzvot! 248 positive ('do this') and 365 negative ('don't do that')." },
+  { q: "What holiday celebrates freedom from slavery in Egypt?", opts: ["Hanukkah", "Purim", "Passover", "Sukkot"], ans: 2, cat: "Holidays", explain: "Passover (Pesach) — we retell the Exodus story every year at the Seder." },
+  { q: "What does 'Tikkun Olam' mean?", opts: ["Day of Rest", "Repairing the World", "Holy Temple", "Book of Life"], ans: 1, cat: "Values", explain: "Every act of kindness repairs a piece of the world." },
+  { q: "Which direction is Hebrew read?", opts: ["Left to right", "Right to left", "Top to bottom", "Bottom to top"], ans: 1, cat: "Aleph-Bet", explain: "Hebrew reads right-to-left — the opposite of English!" },
+  { q: "What is the weekly day of rest called?", opts: ["Yom Tov", "Shabbat", "Havdalah", "Kiddush"], ans: 1, cat: "Shabbat", explain: "Shabbat — from Friday sunset to Saturday night. The most important Jewish practice." },
+  { q: "What does the name 'Ariah' (אריה) mean?", opts: ["Star of God", "Lion of God", "Light of God", "Shield of God"], ans: 1, cat: "Personal", explain: "Ariah means Lion of God — strength and courage are in your name!" },
+  { q: "What does the name 'Eliora' (אליאורה) mean?", opts: ["God is my strength", "God is my shield", "God is my light", "God is my song"], ans: 2, cat: "Personal", explain: "Eliora means God is my light — even in darkness, light is with you." },
+  { q: "What was the Pale of Settlement?", opts: ["A peace treaty", "A restricted zone where Jews had to live in Russia", "A type of prayer shawl", "A Jewish holiday"], ans: 1, cat: "Heritage", explain: "For over 125 years, Russian Jews were confined to this zone. Your family's story." },
+  { q: "How many letters are in the Hebrew alphabet?", opts: ["24", "26", "22", "20"], ans: 2, cat: "Aleph-Bet", explain: "22 letters — all consonants. Five of them change shape at the end of a word." },
+  { q: "What does 'Tzedakah' really mean?", opts: ["Charity", "Justice", "Prayer", "Fasting"], ans: 1, cat: "Values", explain: "Most people say 'charity' but the root word is 'tzedek' — justice. Giving isn't optional!" },
+  { q: "What happened in 1948?", opts: ["The Torah was written", "Israel declared independence", "The Western Wall was built", "The first synagogue opened"], ans: 1, cat: "Heritage", explain: "After 2,000 years of exile, the Jewish people had a homeland again." },
+  { q: "What prayer is said immediately upon waking?", opts: ["The Shema", "Modeh Ani", "Kiddush", "HaMotzi"], ans: 1, cat: "Prayer", explain: "Modeh Ani — the first words of the day are 'thank you.' Gratitude before everything." },
+  { q: "What is the numerical value of the letter Shin (שׁ)?", opts: ["100", "200", "300", "400"], ans: 2, cat: "Aleph-Bet", explain: "Shin = 300. It's on every mezuzah and stands for 'Shaddai' (a name of God)." },
+  { q: "What does the Torah portion 'Bereishit' describe?", opts: ["The Exodus from Egypt", "The Ten Commandments", "Creation of the world", "The flood"], ans: 2, cat: "Torah", explain: "'In the beginning, God created the heavens and the earth.' The very first story." },
+  { q: "Over 1 million Jews from which country moved to Israel in the 1990s?", opts: ["Ethiopia", "Russia", "France", "Argentina"], ans: 1, cat: "Heritage", explain: "The collapse of the Soviet Union enabled the largest modern wave of aliyah." },
+  { q: "What do you eat on Passover instead of bread?", opts: ["Challah", "Latkes", "Matzah", "Hamantaschen"], ans: 2, cat: "Holidays", explain: "Matzah — unleavened bread. The Israelites left Egypt so fast the bread didn't rise." },
+  { q: "What is a 'mitzvah'?", opts: ["A party", "A commandment", "A prayer", "A holiday"], ans: 1, cat: "Values", explain: "Mitzvah means commandment — not just a 'good deed.' There are 613 of them." },
+  { q: "What does Hillel say is the entire Torah on one foot?", opts: ["Love God", "Keep Shabbat", "Don't do to others what's hateful to you", "Study every day"], ans: 2, cat: "Torah", explain: "'What is hateful to you, do not do to others. The rest is commentary. Now go study.'" },
+];
+
+const ACHIEVEMENTS = [
+  { id: "first_quiz", name: "First Steps", desc: "Complete your first quiz", icon: "🌱", need: 1 },
+  { id: "five_quizzes", name: "Curious Mind", desc: "Complete 5 quizzes", icon: "🧠", need: 5 },
+  { id: "ten_quizzes", name: "Torah Scholar", desc: "Complete 10 quizzes", icon: "📜", need: 10 },
+  { id: "perfect", name: "Perfect Score", desc: "Get 5 in a row correct", icon: "⭐", need: 5 },
+  { id: "all_sections", name: "Explorer", desc: "Visit every section", icon: "🗺️", need: 10 },
+];
+
 const SECTIONS = [
   { id: "home", label: "Home", icon: STAR },
+  { id: "challenge", label: "Challenge", icon: "🏆" },
   { id: "alephbet", label: "א-ב", icon: "🔤" },
   { id: "torah", label: "Torah", icon: "📖" },
   { id: "prayer", label: "Prayer", icon: "🙏" },
@@ -424,6 +459,13 @@ export default function TorahLight() {
   const [liveDaf, setLiveDaf] = useState(null);
   const [torahLoading, setTorahLoading] = useState(true);
   const [torahExpanded, setTorahExpanded] = useState(false);
+  // Quiz state
+  const [quizQ, setQuizQ] = useState(null);
+  const [quizPicked, setQuizPicked] = useState(null);
+  const [quizScore, setQuizScore] = useState({ total: 0, correct: 0, streak: 0, bestStreak: 0 });
+  const [quizRevealed, setQuizRevealed] = useState(false);
+  const [quizHistory, setQuizHistory] = useState([]);
+  const [sectionsVisited, setSectionsVisited] = useState(new Set(["home"]));
 
   useEffect(() => {
     const w = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 1)) / 604800000);
@@ -671,7 +713,7 @@ export default function TorahLight() {
               <div style={{ padding: "10px 14px", background: "rgba(212,168,83,0.06)", borderRadius: 8, borderLeft: `3px solid ${C.gold}` }}>
                 <p style={{ fontSize: 12, color: C.goldLight, margin: 0, fontStyle: "italic", fontWeight: 400 }}>"{p.wisdom}"</p>
               </div>
-              <a href={`https://www.sefaria.org/${p.ref.replace(/\s/g, "_").replace(/[–:]/g, ".")}`} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, color: C.sky, fontSize: 12, textDecoration: "underline" }}>
+              <a href={`https://www.sefaria.org/${p.book}.${p.ref.split(" ").slice(-1)[0].replace(/[–]/g, "-").replace(/:/g, ".")}`} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, color: C.sky, fontSize: 12, textDecoration: "underline" }}>
                 Read full text on Sefaria →
               </a>
             </div>}
@@ -880,13 +922,169 @@ export default function TorahLight() {
     </div>
   );
 
-  const R = { home: renderHome, alephbet: renderAlephBet, torah: renderTorah, prayer: renderPrayer, globe: renderGlobe, heritage: renderHeritage, holidays: renderHolidays, values: renderValues, heart: renderHeart, lesson: renderLesson, shabbat: renderShabbat };
+  // ─── QUIZ HELPERS ───
+  const loadNewQuiz = () => {
+    const available = QUIZ_POOL.filter(q => !quizHistory.includes(QUIZ_POOL.indexOf(q)));
+    const pool = available.length > 0 ? available : QUIZ_POOL;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    setQuizQ(pick);
+    setQuizPicked(null);
+    setQuizRevealed(false);
+  };
+
+  const handleQuizAnswer = (idx) => {
+    if (quizRevealed) return;
+    setQuizPicked(idx);
+    setQuizRevealed(true);
+    const correct = idx === quizQ.ans;
+    setQuizScore(prev => ({
+      total: prev.total + 1,
+      correct: prev.correct + (correct ? 1 : 0),
+      streak: correct ? prev.streak + 1 : 0,
+      bestStreak: correct ? Math.max(prev.bestStreak, prev.streak + 1) : prev.bestStreak,
+    }));
+    setQuizHistory(prev => [...prev, QUIZ_POOL.indexOf(quizQ)]);
+  };
+
+  const earnedAchievements = ACHIEVEMENTS.filter(a => {
+    if (a.id === "first_quiz") return quizScore.total >= 1;
+    if (a.id === "five_quizzes") return quizScore.total >= 5;
+    if (a.id === "ten_quizzes") return quizScore.total >= 10;
+    if (a.id === "perfect") return quizScore.bestStreak >= 5;
+    if (a.id === "all_sections") return sectionsVisited.size >= 10;
+    return false;
+  });
+
+  // ─── CHALLENGE SECTION ───
+  const renderChallenge = () => {
+    if (!quizQ) loadNewQuiz();
+    const pct = quizScore.total > 0 ? Math.round((quizScore.correct / quizScore.total) * 100) : 0;
+    return (
+      <div style={{ padding: 20 }}>
+        <h2 style={{ color: C.goldLight, fontSize: 22, marginBottom: 4 }}>🏆 Daily Challenge</h2>
+        <p style={{ color: C.muted, fontSize: 13, marginBottom: 20 }}>Test what you've learned! Every question teaches you something new.</p>
+
+        {/* Score Bar */}
+        <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
+          {[
+            { label: "Score", val: `${quizScore.correct}/${quizScore.total}`, col: C.gold },
+            { label: "Accuracy", val: `${pct}%`, col: pct >= 80 ? C.sage : pct >= 50 ? C.gold : C.ember },
+            { label: "Streak", val: `${quizScore.streak} 🔥`, col: C.ember },
+            { label: "Best", val: `${quizScore.bestStreak} ⭐`, col: C.purple },
+          ].map(s => (
+            <div key={s.label} style={{ flex: 1, minWidth: 70, padding: "10px 12px", background: C.glass, border: `1px solid ${C.gb}`, borderRadius: 10, textAlign: "center" }}>
+              <p style={{ color: C.muted, fontSize: 10, margin: "0 0 2px", letterSpacing: 1 }}>{s.label}</p>
+              <p style={{ color: s.col, fontSize: 18, margin: 0, fontWeight: 700 }}>{s.val}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Quiz Card */}
+        {quizQ && <div style={{ background: C.glass, border: `1px solid ${C.gb}`, borderRadius: 16, padding: 24, marginBottom: 20 }}>
+          <span style={{ fontSize: 10, color: C.muted, background: "rgba(212,168,83,0.08)", padding: "3px 10px", borderRadius: 10 }}>{quizQ.cat}</span>
+          <p style={{ color: C.goldLight, fontSize: 18, margin: "12px 0 16px", lineHeight: 1.5 }}>{quizQ.q}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {quizQ.opts.map((opt, i) => {
+              const isCorrect = i === quizQ.ans;
+              const isPicked = i === quizPicked;
+              let bg = "transparent";
+              let border = C.gb;
+              let col = C.parchment;
+              if (quizRevealed) {
+                if (isCorrect) { bg = "rgba(34,197,94,0.12)"; border = C.sage; col = C.sage; }
+                else if (isPicked && !isCorrect) { bg = "rgba(239,68,68,0.12)"; border = C.ember; col = C.ember; }
+              } else if (isPicked) {
+                bg = "rgba(212,168,83,0.1)"; border = C.gold;
+              }
+              return (
+                <button key={i} onClick={() => handleQuizAnswer(i)} style={{
+                  background: bg, border: `1px solid ${border}`, borderRadius: 10,
+                  padding: "12px 16px", color: col, cursor: quizRevealed ? "default" : "pointer",
+                  fontFamily: "Georgia,serif", fontSize: 14, textAlign: "left",
+                  transition: "all .2s", width: "100%",
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                }}>
+                  <span>{opt}</span>
+                  {quizRevealed && isCorrect && <span>✓</span>}
+                  {quizRevealed && isPicked && !isCorrect && <span>✗</span>}
+                </button>
+              );
+            })}
+          </div>
+          {quizRevealed && (
+            <div style={{ marginTop: 16 }}>
+              <div style={{ padding: "12px 16px", background: quizPicked === quizQ.ans ? "rgba(34,197,94,0.06)" : "rgba(239,68,68,0.06)", borderRadius: 10, borderLeft: `3px solid ${quizPicked === quizQ.ans ? C.sage : C.ember}`, marginBottom: 12 }}>
+                <p style={{ color: quizPicked === quizQ.ans ? C.sage : C.ember, fontSize: 14, margin: "0 0 4px", fontWeight: 700 }}>
+                  {quizPicked === quizQ.ans ? "Correct! ⭐" : "Not quite — but now you know!"}
+                </p>
+                <p style={{ color: C.parchmentDark, fontSize: 13, margin: 0, lineHeight: 1.6 }}>{quizQ.explain}</p>
+              </div>
+              <button onClick={loadNewQuiz} style={{
+                background: `linear-gradient(135deg,${C.gold},${C.goldDim})`,
+                border: "none", borderRadius: 10, padding: "12px 24px",
+                color: C.night, cursor: "pointer", fontFamily: "Georgia,serif",
+                fontSize: 14, fontWeight: 700, width: "100%",
+              }}>
+                Next Question →
+              </button>
+            </div>
+          )}
+        </div>}
+
+        {/* Achievements */}
+        <p style={{ color: C.gold, fontSize: 14, fontWeight: 700, marginBottom: 12 }}>Achievements</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {ACHIEVEMENTS.map(a => {
+            const earned = earnedAchievements.includes(a);
+            return (
+              <div key={a.id} style={{
+                background: earned ? "rgba(212,168,83,0.08)" : C.glass,
+                border: `1px solid ${earned ? C.gold : C.gb}`,
+                borderRadius: 10, padding: "12px 16px",
+                display: "flex", alignItems: "center", gap: 12,
+                opacity: earned ? 1 : 0.4,
+              }}>
+                <span style={{ fontSize: 24 }}>{a.icon}</span>
+                <div>
+                  <p style={{ color: earned ? C.goldLight : C.muted, fontSize: 14, margin: "0 0 2px", fontWeight: 700 }}>{a.name}</p>
+                  <p style={{ color: C.muted, fontSize: 12, margin: 0 }}>{a.desc}</p>
+                </div>
+                {earned && <span style={{ marginLeft: "auto", color: C.sage, fontSize: 12, fontWeight: 700 }}>EARNED</span>}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Progress */}
+        <div style={{ marginTop: 20, background: C.glass, border: `1px solid ${C.gb}`, borderRadius: 16, padding: 20 }}>
+          <p style={{ color: C.gold, fontSize: 14, fontWeight: 700, marginBottom: 8 }}>Your Journey</p>
+          <p style={{ color: C.muted, fontSize: 12, marginBottom: 12 }}>Sections explored: {sectionsVisited.size} / {SECTIONS.length}</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+            {SECTIONS.map(s => (
+              <span key={s.id} style={{
+                padding: "4px 10px", borderRadius: 12, fontSize: 11,
+                background: sectionsVisited.has(s.id) ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.03)",
+                color: sectionsVisited.has(s.id) ? C.sage : C.muted,
+                border: `1px solid ${sectionsVisited.has(s.id) ? "rgba(34,197,94,0.3)" : C.gb}`,
+              }}>
+                {s.icon} {s.label} {sectionsVisited.has(s.id) ? "✓" : ""}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const handleNav = (id) => { setSec(id); setSectionsVisited(prev => new Set([...prev, id])); };
+
+  const R = { home: renderHome, challenge: renderChallenge, alephbet: renderAlephBet, torah: renderTorah, prayer: renderPrayer, globe: renderGlobe, heritage: renderHeritage, holidays: renderHolidays, values: renderValues, heart: renderHeart, lesson: renderLesson, shabbat: renderShabbat };
 
   return (
     <div style={{ minHeight: "100vh", background: `linear-gradient(180deg,${C.night} 0%,${C.deep} 40%,${C.ocean} 100%)`, fontFamily: "Georgia,'Times New Roman',serif", color: C.parchment, display: "flex", flexDirection: "column" }}>
       <nav style={{ display: "flex", gap: 2, padding: "8px 6px 0", overflowX: "auto", borderBottom: `1px solid ${C.gb}`, background: "rgba(10,14,26,0.85)", backdropFilter: "blur(12px)", position: "sticky", top: 0, zIndex: 100, WebkitOverflowScrolling: "touch" }}>
         {SECTIONS.map(s => (
-          <button key={s.id} onClick={() => setSec(s.id)} style={{ background: sec === s.id ? "rgba(212,168,83,0.12)" : "transparent", border: "none", borderBottom: sec === s.id ? `2px solid ${C.gold}` : "2px solid transparent", color: sec === s.id ? C.goldLight : C.muted, padding: "8px 10px", cursor: "pointer", fontFamily: "Georgia,serif", fontSize: 10, whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 44, transition: "all .2s" }}>
+          <button key={s.id} onClick={() => handleNav(s.id)} style={{ background: sec === s.id ? "rgba(212,168,83,0.12)" : "transparent", border: "none", borderBottom: sec === s.id ? `2px solid ${C.gold}` : "2px solid transparent", color: sec === s.id ? C.goldLight : C.muted, padding: "8px 10px", cursor: "pointer", fontFamily: "Georgia,serif", fontSize: 10, whiteSpace: "nowrap", display: "flex", flexDirection: "column", alignItems: "center", gap: 2, minWidth: 44, transition: "all .2s" }}>
             <span style={{ fontSize: 15 }}>{s.icon}</span><span>{s.label}</span>
           </button>
         ))}
